@@ -1,7 +1,9 @@
 package com.xbabio.CarRegistry.controller;
 
+import com.xbabio.CarRegistry.controller.dtos.CarSaveRequest;
 import com.xbabio.CarRegistry.domain.Car;
 import com.xbabio.CarRegistry.service.CarService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -10,15 +12,17 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Optional;
 
 @RestController
+@Slf4j
 public class CarController {
 
     @Autowired
     private CarService carService;
 
     @PostMapping("/car")
-    public ResponseEntity<?> addCar(@RequestBody Car car){
-        carService.addCar(car);
-        System.out.println("Coche creado: " + car.toString());
+    public ResponseEntity<?> addCar(@RequestBody CarSaveRequest carRequest){
+        Car car = carService.mapCarSaveRequestToEntity(carRequest);
+        carService.saveCar(car);
+        log.info("Coche creado: " + car.toString());
         return new ResponseEntity<>(car, HttpStatus.CREATED);
     }
 
@@ -28,28 +32,34 @@ public class CarController {
         if (carFound.isEmpty()){
             return ResponseEntity.notFound().build();
         }
-        System.out.println("El coche es: " + carFound.toString());
+        log.info("El coche es: " + carFound.toString());
         return ResponseEntity.ok(carFound);
+    }
+
+    @GetMapping("/cars")
+    public ResponseEntity<?> getAllCars(){
+        return ResponseEntity.ok(carService.getAllCars());
     }
 
     @PutMapping("/car")
     public ResponseEntity<?> updateCar(@RequestBody Car car){
-        Car carUpdated = carService.updateCar(car);
-        if (carUpdated == null){
-            return ResponseEntity.notFound().build();
+        try {
+            carService.saveCar(car);
+        }catch(Exception e){
+            log.error(e.getMessage());
+            return ResponseEntity.internalServerError().build();
         }
-        System.out.println("El coche actualizado queda: " + carUpdated.toString());
-        return ResponseEntity.ok(carUpdated);
+        return ResponseEntity.ok().build();
     }
 
     @DeleteMapping("/car/{id}")
     public ResponseEntity<?> deleteCar(@PathVariable Integer id){
-        try {
-            carService.deleteCar(id);
-        }catch (Exception e){
+        Optional<Car> car = carService.getCar(id);
+        if (car.isEmpty()) {
             return ResponseEntity.notFound().build();
         }
-        System.out.println("El coche ha sido borrado");
+        carService.deleteCar(car.get());
+        log.info("El coche con id {} ha sido borrado.", id);
         return ResponseEntity.ok().build();
     }
 }
