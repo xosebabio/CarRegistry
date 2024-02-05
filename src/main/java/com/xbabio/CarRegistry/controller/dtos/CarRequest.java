@@ -1,7 +1,6 @@
 package com.xbabio.CarRegistry.controller.dtos;
 
-import com.xbabio.CarRegistry.domain.Brand;
-import jakarta.persistence.*;
+import com.xbabio.CarRegistry.entity.BrandEntity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -10,9 +9,8 @@ import lombok.ToString;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString
-public class CarSaveRequest {
-
+public class CarRequest {
+    private Integer id;
     private String model;
     private Integer milleage;
     private Double price;
@@ -21,6 +19,5 @@ public class CarSaveRequest {
     private String colour;
     private String fuelType;
     private Integer numDoors;
-    private Brand brand;
-
+    private BrandEntity brandEntity;
 }

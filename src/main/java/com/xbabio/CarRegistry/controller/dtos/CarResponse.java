@@ -1,13 +1,8 @@
-package com.xbabio.CarRegistry.domain;
+package com.xbabio.CarRegistry.controller.dtos;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import com.xbabio.CarRegistry.entity.BrandEntity;
 
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
-public class Car {
+public class CarResponse {
     private Integer id;
     private String model;
     private Integer milleage;
@@ -17,5 +12,5 @@ public class Car {
     private String colour;
     private String fuelType;
     private Integer numDoors;
-    private Brand brand;
+    private BrandEntity brandEntity;
 }

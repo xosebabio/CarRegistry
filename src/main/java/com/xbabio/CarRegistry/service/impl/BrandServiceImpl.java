@@ -1,7 +1,7 @@
 package com.xbabio.CarRegistry.service.impl;
 
-import com.xbabio.CarRegistry.controller.dtos.BrandSaveRequest;
-import com.xbabio.CarRegistry.domain.Brand;
+import com.xbabio.CarRegistry.controller.dtos.BrandRequest;
+import com.xbabio.CarRegistry.entity.BrandEntity;
 import com.xbabio.CarRegistry.repository.BrandRepository;
 import com.xbabio.CarRegistry.service.BrandService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,32 +17,23 @@ public class BrandServiceImpl implements BrandService {
     BrandRepository brandRepository;
 
     @Override
-    public Optional<Brand> getBrand(Integer id) {
+    public Optional<BrandEntity> getBrand(Integer id) {
         return brandRepository.findById(id);
     }
 
     @Override
-    public void saveBrand(Brand brand) {
-        brandRepository.save(brand);
+    public void saveBrand(BrandEntity brandEntity) {
+        brandRepository.save(brandEntity);
     }
 
     @Override
-    public void deleteBrand(Brand brand) {
-        brandRepository.delete(brand);
+    public void deleteBrand(BrandEntity brandEntity) {
+        brandRepository.delete(brandEntity);
     }
 
     @Override
-    public List<Brand> getAllBrands() {
+    public List<BrandEntity> getAllBrands() {
         return brandRepository.findAll();
     }
 
-    @Override
-    public Brand mapBrandSaveRequestToEntity(BrandSaveRequest brandSaveRequest) {
-        Brand brand = new Brand();
-        brand.setName(brandSaveRequest.getName());
-        brand.setCars(brandSaveRequest.getCars());
-        brand.setCountry(brandSaveRequest.getCountry());
-        brand.setWarranty(brandSaveRequest.getWarranty());
-        return brand;
-    }
 }

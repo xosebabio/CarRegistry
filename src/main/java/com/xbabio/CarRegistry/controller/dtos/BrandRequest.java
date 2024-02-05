@@ -1,7 +1,6 @@
 package com.xbabio.CarRegistry.controller.dtos;
 
-import com.xbabio.CarRegistry.domain.Car;
-import jakarta.persistence.*;
+import com.xbabio.CarRegistry.entity.CarEntity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -12,10 +11,10 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString
-public class BrandSaveRequest {
+public class BrandRequest {
+    private Integer id;
     private String name;
     private Integer warranty;
     private String country;
-    private List<Car> cars;
+    private List<CarEntity> carEntities;
 }
