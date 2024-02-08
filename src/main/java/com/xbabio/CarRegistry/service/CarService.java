@@ -1,15 +1,13 @@
 package com.xbabio.CarRegistry.service;
 
-import com.xbabio.CarRegistry.controller.dtos.CarRequest;
-import com.xbabio.CarRegistry.domain.Car;
-import com.xbabio.CarRegistry.entity.CarEntity;
+import com.xbabio.CarRegistry.controller.dtos.CarDto;
 
 import java.util.List;
 
 public interface CarService {
-    Car getCar(Integer id);
-    Car saveCar(Car car);
+    CarDto getCar(Integer id) throws Exception;
+    CarDto saveCar(CarDto carDto);
     void deleteCar(Integer id);
-    List<Car> getAllCars();
-    Car updateById(Integer id, Car car);
+    List<CarDto> getAllCars();
+    CarDto updateById(Integer id, CarDto carDto) throws Exception;
 }

@@ -1,8 +1,14 @@
 package com.xbabio.CarRegistry.controller.dtos;
 
-import com.xbabio.CarRegistry.entity.BrandEntity;
+import com.xbabio.CarRegistry.entity.Brand;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-public class CarResponse {
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+public class CarDto {
     private Integer id;
     private String model;
     private Integer milleage;
@@ -12,5 +18,5 @@ public class CarResponse {
     private String colour;
     private String fuelType;
     private Integer numDoors;
-    private BrandEntity brandEntity;
+    private Brand brand;
 }

@@ -1,15 +1,14 @@
 package com.xbabio.CarRegistry.controller.dtos;
 
-import com.xbabio.CarRegistry.entity.BrandEntity;
+import com.xbabio.CarRegistry.entity.Brand;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class CarRequest {
+public class CarResponseDto {
     private Integer id;
     private String model;
     private Integer milleage;
@@ -19,5 +18,5 @@ public class CarRequest {
     private String colour;
     private String fuelType;
     private Integer numDoors;
-    private BrandEntity brandEntity;
+    private Brand brand;
 }

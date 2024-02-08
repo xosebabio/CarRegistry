@@ -1,23 +1,22 @@
 package com.xbabio.CarRegistry.controller.mapper;
 
-import com.xbabio.CarRegistry.controller.dtos.CarRequest;
-import com.xbabio.CarRegistry.controller.dtos.CarResponse;
-import com.xbabio.CarRegistry.domain.Car;
+import com.xbabio.CarRegistry.controller.dtos.CarDto;
+import com.xbabio.CarRegistry.controller.dtos.CarResponseDto;
+import com.xbabio.CarRegistry.entity.Car;
+import java.util.List;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
-import org.springframework.stereotype.Component;
 
-@Mapper
-@Component
+@Mapper(componentModel = "spring")
 public interface CarMapper {
 
     CarMapper MAPPER = Mappers.getMapper(CarMapper.class);
 
-    CarRequest carToCarRequest(Car car);
+    CarDto carToCarDto(Car car);
 
-    Car carRequestToCar(CarRequest carRequest);
+    Car carDtoToCar(CarDto carDTO);
 
-    CarResponse carToCarResponse(Car car);
+    CarResponseDto carDtoToCarResponse(CarDto car);
 
-    Car carResponseToCar(CarResponse carResponse);
+    List<CarDto> carListToCarDtoList(List<Car> carList);
 }

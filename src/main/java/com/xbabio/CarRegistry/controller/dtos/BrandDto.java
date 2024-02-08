@@ -1,20 +1,18 @@
 package com.xbabio.CarRegistry.controller.dtos;
 
-import com.xbabio.CarRegistry.entity.CarEntity;
+import com.xbabio.CarRegistry.entity.Car;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
 
 import java.util.List;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class BrandRequest {
+public class BrandDto {
     private Integer id;
     private String name;
     private Integer warranty;
     private String country;
-    private List<CarEntity> carEntities;
 }

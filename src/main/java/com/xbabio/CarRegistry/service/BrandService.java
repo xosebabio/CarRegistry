@@ -1,15 +1,14 @@
 package com.xbabio.CarRegistry.service;
 
-import com.xbabio.CarRegistry.controller.dtos.BrandRequest;
-import com.xbabio.CarRegistry.entity.BrandEntity;
+import com.xbabio.CarRegistry.controller.dtos.BrandDto;
 
 import java.util.List;
-import java.util.Optional;
 
 
 public interface BrandService {
-    Optional<BrandEntity> getBrand(Integer id);
-    void saveBrand(BrandEntity brandEntity);
-    void deleteBrand(BrandEntity brandEntity);
-    List<BrandEntity> getAllBrands();
+    BrandDto getBrand(Integer id) throws Exception;
+    BrandDto saveBrand(BrandDto brandDto);
+    void deleteBrand(BrandDto brandDto);
+    List<BrandDto> getAllBrands();
+    BrandDto updateById(Integer id, BrandDto brandDto) throws Exception;
 }

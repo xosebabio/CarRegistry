@@ -1,5 +1,7 @@
 package com.xbabio.CarRegistry.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -11,7 +13,7 @@ import java.util.List;
 @NoArgsConstructor
 @Entity
 @Table(name = "brand")
-public class BrandEntity {
+public class Brand {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -25,6 +27,4 @@ public class BrandEntity {
     @Column(name = "country")
     private String country;
 
-    @OneToMany(mappedBy = "brand")
-    private List<CarEntity> carEntities;
 }

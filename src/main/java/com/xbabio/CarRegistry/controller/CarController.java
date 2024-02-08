@@ -1,18 +1,13 @@
 package com.xbabio.CarRegistry.controller;
 
-import com.xbabio.CarRegistry.controller.dtos.CarRequest;
+import com.xbabio.CarRegistry.controller.dtos.CarDto;
 import com.xbabio.CarRegistry.controller.mapper.CarMapper;
-import com.xbabio.CarRegistry.domain.Car;
-import com.xbabio.CarRegistry.entity.CarEntity;
 import com.xbabio.CarRegistry.service.CarService;
-import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Optional;
 
 @RestController
 @Slf4j
@@ -21,15 +16,14 @@ public class CarController {
     @Autowired
     private CarService carService;
 
-    @Resource
+    @Autowired
     private CarMapper carMapper;
 
     @PostMapping("/car")
-    public ResponseEntity<?> addCar(@RequestBody CarRequest carRequest){
+    public ResponseEntity<?> addCar(@RequestBody CarDto carDTO){
         try{
-            Car car = carMapper.carRequestToCar(carRequest);
-            Car carSaved = carService.saveCar(car);
-            return new ResponseEntity<>(carMapper.carToCarResponse(carSaved), HttpStatus.CREATED);
+            CarDto carSaved = carService.saveCar(carDTO);
+            return new ResponseEntity<>(carMapper.carDtoToCarResponse(carSaved), HttpStatus.CREATED);
         } catch (Exception e){
             log.error(e.getMessage());
             return ResponseEntity.internalServerError().build();
@@ -39,8 +33,8 @@ public class CarController {
     @GetMapping("/car/{id}")
     public ResponseEntity<?> getCar(@PathVariable Integer id){
         try {
-            Car carFound = carService.getCar(id);
-            return ResponseEntity.ok(carMapper.carToCarResponse(carFound));
+            CarDto carFound = carService.getCar(id);
+            return ResponseEntity.ok(carMapper.carDtoToCarResponse(carFound));
         }catch (Exception e){
             log.error(e.getMessage());
             return ResponseEntity.notFound().build();
@@ -54,10 +48,10 @@ public class CarController {
     }
 
     @PutMapping("/car/{id}")
-    public ResponseEntity<?> updateCar(@PathVariable Integer id, @RequestBody CarRequest carRequest){
+    public ResponseEntity<?> updateCar(@PathVariable Integer id, @RequestBody CarDto carDTO){
         try {
-            Car carUpdated = carService.updateById(id,carMapper.carRequestToCar(carRequest));
-            return ResponseEntity.ok(carMapper.carToCarResponse(carUpdated));
+            CarDto carUpdated = carService.updateById(id,carDTO);
+            return ResponseEntity.ok(carMapper.carDtoToCarResponse(carUpdated));
         }catch(Exception e){
             log.error(e.getMessage());
             return ResponseEntity.notFound().build();
@@ -67,13 +61,13 @@ public class CarController {
     @DeleteMapping("/car/{id}")
     public ResponseEntity<?> deleteCar(@PathVariable Integer id){
         try {
-            Car car = carService.getCar(id);
+            CarDto car = carService.getCar(id);
             carService.deleteCar(id);
+            return ResponseEntity.ok().build();
         }catch(Exception e){
             log.error(e.getMessage());
             return ResponseEntity.notFound().build();
         }
         //log.info("El coche con id {} ha sido borrado.", id);
-        return ResponseEntity.ok().build();
     }
 }

@@ -1,11 +1,10 @@
 package com.xbabio.CarRegistry.service.impl;
 
-import com.xbabio.CarRegistry.controller.dtos.CarRequest;
-import com.xbabio.CarRegistry.domain.Car;
-import com.xbabio.CarRegistry.entity.CarEntity;
+import com.xbabio.CarRegistry.controller.dtos.CarDto;
+import com.xbabio.CarRegistry.controller.mapper.CarMapper;
+import com.xbabio.CarRegistry.entity.Car;
 import com.xbabio.CarRegistry.repository.CarRepository;
 import com.xbabio.CarRegistry.service.CarService;
-import com.xbabio.CarRegistry.service.converters.CarConverter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,19 +19,22 @@ public class CarServiceImpl implements CarService {
     @Autowired
     private CarRepository carRepository;
 
-    private CarConverter carConverter;
+    @Autowired
+    private CarMapper carMapper;
 
     @Override
-    public Car getCar(Integer id) {
-        Optional<CarEntity> carOptional = carRepository.findById(id);
-        return carOptional.map(carEntity -> carConverter.toCar(carEntity)).orElse(null); // Si carOptional tiene valor, mapea el objeto a Car, sino retorna null
+    public CarDto getCar(Integer id) throws Exception {
+        Optional<Car> carOptional = carRepository.findById(id);
+        if (carOptional.isEmpty())
+            throw new Exception();
+        return carMapper.carToCarDto(carOptional.get());
     }
 
     @Override
-    public Car saveCar(Car car) {
+    public CarDto saveCar(CarDto car) {
         log.info("Adding car to the Database...");
-        CarEntity entity = carConverter.toEntity(car);
-        return carConverter.toCar(carRepository.save(entity));
+        Car newCar = carRepository.save(carMapper.carDtoToCar(car));
+        return carMapper.carToCarDto(newCar);
     }
 
 
@@ -43,19 +45,17 @@ public class CarServiceImpl implements CarService {
     }
 
     @Override
-    public List<Car> getAllCars() {
-        return carRepository.findAll().stream().map(carEntity -> carConverter.toCar(carEntity)).toList(); // Mapea todos los objetos a Car
+    public List<CarDto> getAllCars() {
+        return carMapper.carListToCarDtoList(carRepository.findAll());
     }
 
     @Override
-    public Car updateById(Integer id, Car car) {
+    public CarDto updateById(Integer id, CarDto car) throws Exception {
         log.info("Updating car with id: " + id);
-        Optional<CarEntity> carOptional = carRepository.findById(id);
-        if (carOptional.isPresent()){
-            CarEntity entity = carConverter.toEntity(car);
-            entity.setId(id);
-            return carConverter.toCar(carRepository.save(entity));
-        }
-        return null;
+        Optional<Car> carOptional = carRepository.findById(id);
+        if (carOptional.isEmpty())
+            throw new Exception();
+        car.setId(id);
+        return carMapper.carToCarDto(carRepository.save(carMapper.carDtoToCar(car)));
     }
 }

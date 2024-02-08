@@ -1,5 +1,6 @@
 package com.xbabio.CarRegistry.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -9,7 +10,7 @@ import lombok.*;
 @NoArgsConstructor
 @Entity
 @Table(name = "car")
-public class CarEntity {
+public class Car {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -40,5 +41,5 @@ public class CarEntity {
 
     @ManyToOne
     @JoinColumn(name = "brand_id")
-    private BrandEntity brandEntity;
+    private Brand brand;
 }

@@ -1,23 +1,23 @@
 package com.xbabio.CarRegistry.controller.mapper;
 
-import com.xbabio.CarRegistry.controller.dtos.BrandRequest;
-import com.xbabio.CarRegistry.controller.dtos.BrandResponse;
-import com.xbabio.CarRegistry.domain.Brand;
+import com.xbabio.CarRegistry.controller.dtos.BrandDto;
+import com.xbabio.CarRegistry.controller.dtos.BrandResponseDto;
+import com.xbabio.CarRegistry.entity.Brand;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
-import org.springframework.stereotype.Component;
 
-@Mapper
-@Component
+import java.util.List;
+
+@Mapper(componentModel = "spring")
 public interface BrandMapper {
 
     BrandMapper MAPPER = Mappers.getMapper(BrandMapper.class);
 
-    BrandRequest brandToBrandRequest(Brand brand);
+    BrandDto brandToBrandDto(Brand brand);
 
-    BrandResponse brandToBrandResponse(Brand brand);
+    BrandResponseDto brandDtoToBrandResponse(BrandDto brand);
 
-    Brand brandRequestToBrand(BrandRequest brandRequest);
+    Brand brandDtoToBrand(BrandDto brandDTO);
 
-    Brand brandResponseToBrand(BrandResponse brandResponse);
+    List<BrandDto> brandListToBrandDtoList(List<Brand> brandList);
 }
