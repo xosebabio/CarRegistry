@@ -150,11 +150,10 @@ jobs:
           name: compiled-application
 
       # Paso 4: Ejecutar el análisis de SonarCloud
-      - name: SonarCloud Scan
+      - name: Analyze with SonarCloud
         uses: SonarSource/sonarcloud-github-action@v2
-        with:
-          args: >
-            -Dsonar.projectKey=${{ secrets.SONAR_PROJECT_KEY }}
-            -Dsonar.organization=${{ secrets.SONAR_ORGANIZATION }}
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        with:
+          organization: 'xosebabio'
+          projectKey: 'xosebabio_CarRegistry'
