@@ -128,7 +128,18 @@ jobs:
   # Job 3: Análisis con SonarCloud
   sonarcloud:
     runs-on: ubuntu-latest
-    needs: build  # Este trabajo depende del job de build
+    needs: test  # Este trabajo depende del job de build
+
+    services:
+      postgres:
+        image: postgres:13
+        ports:
+          - 5432:5432
+        env:
+          POSTGRES_DB: sonarqube
+          POSTGRES_USER: sonar
+          POSTGRES_PASSWORD: sonar_password
+        options: --health-cmd "pg_isready -U sonar" --health-interval 10s --health-timeout 5s --health-retries 3
 
     steps:
       - name: Checkout code
