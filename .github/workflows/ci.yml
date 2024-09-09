@@ -17,9 +17,9 @@ jobs:
       postgres:
         image: postgres:13
         env:
-          POSTGRES_DB: testdb
-          POSTGRES_USER: testuser
-          POSTGRES_PASSWORD: testpassword
+          POSTGRES_DB: carregistry
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: 1234
         ports:
           - 5432:5432
         options: >-
@@ -76,9 +76,9 @@ jobs:
       postgres:
         image: postgres:13
         env:
-          POSTGRES_DB: testdb
-          POSTGRES_USER: testuser
-          POSTGRES_PASSWORD: testpassword
+          POSTGRES_DB: carregistry
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: 1234
         ports:
           - 5432:5432
         options: >-
@@ -134,9 +134,9 @@ jobs:
       postgres:
         image: postgres:13
         env:
-          POSTGRES_DB: testdb
-          POSTGRES_USER: testuser
-          POSTGRES_PASSWORD: testpassword
+          POSTGRES_DB: carregistry
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: 1234
         ports:
           - 5432:5432
         options: >-
