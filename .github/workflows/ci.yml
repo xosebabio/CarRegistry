@@ -133,13 +133,17 @@ jobs:
     services:
       postgres:
         image: postgres:13
+        env:
+          POSTGRES_DB: testdb
+          POSTGRES_USER: testuser
+          POSTGRES_PASSWORD: testpassword
         ports:
           - 5432:5432
-        env:
-          POSTGRES_DB: sonarqube
-          POSTGRES_USER: sonar
-          POSTGRES_PASSWORD: sonar_password
-        options: --health-cmd "pg_isready -U sonar" --health-interval 10s --health-timeout 5s --health-retries 3
+        options: >-
+          --health-cmd="pg_isready"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=5
 
     steps:
       - name: Checkout code
