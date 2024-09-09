@@ -143,17 +143,5 @@ jobs:
           distribution: 'adopt'
           cache: maven
 
-      # Paso 3: Descargar los artefactos de compilación
-      - name: Download build artifacts
-        uses: actions/download-artifact@v3
-        with:
-          name: compiled-application
-
-      # Paso 4: Ejecutar el análisis de SonarCloud
-      - name: Analyze with SonarCloud
-        uses: SonarSource/sonarcloud-github-action@v2
-        env:
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        with:
-          organization: 'xosebabio'
-          projectKey: 'xosebabio_CarRegistry'
+      - name: Build and Analyze with Maven
+        run: mvn clean verify sonar:sonar -Dsonar.projectKey=xosebabio_CarRegistry -Dsonar.organization=xosebabio -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=${{ secrets.SONAR_TOKEN }}
