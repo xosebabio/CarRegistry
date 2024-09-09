@@ -52,10 +52,12 @@ jobs:
       - name: SonarCloud Scan
         uses: SonarSource/sonarcloud-github-action@v2
         with:
-          projectKey: ${{ secrets.SONAR_PROJECT_KEY }}    # Project key de SonarCloud
-          organization: ${{ secrets.SONAR_ORGANIZATION }}  # Organización en SonarCloud
+          args: >
+            -Dsonar.projectKey=${{ secrets.SONAR_PROJECT_KEY }}
+            -Dsonar.organization=${{ secrets.SONAR_ORGANIZATION }}
         env:
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}          # Token de autenticación en SonarCloud
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+
 
       # Paso 5: Configurar la base de datos PostgreSQL en el proyecto Spring
       - name: Set up PostgreSQL environment variables
