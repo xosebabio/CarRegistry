@@ -8,6 +8,7 @@ class CarRegistryApplicationTests {
 
 	@Test
 	void contextLoads() {
+
 	}
 
 }

@@ -1,16 +1,19 @@
 package com.xbabio.CarRegistry.controller.dtos;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-
 @Data
-@AllArgsConstructor
+@Builder
 @NoArgsConstructor
-public class BrandDto {
-    private Integer id;
-    private String name;
-    private Integer warranty;
-    private String country;
+@AllArgsConstructor
+public class SignUpRequest {
+
+    String name;
+    String surname;
+    String email;
+    String password;
+
 }

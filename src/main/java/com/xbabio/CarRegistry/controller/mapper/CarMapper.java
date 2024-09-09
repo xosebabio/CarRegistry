@@ -10,13 +10,15 @@ import org.mapstruct.factory.Mappers;
 @Mapper(componentModel = "spring")
 public interface CarMapper {
 
-    CarMapper MAPPER = Mappers.getMapper(CarMapper.class);
+    CarDto toDto(Car car);
 
-    CarDto carToCarDto(Car car);
+    Car toCar(CarDto carDTO);
 
-    Car carDtoToCar(CarDto carDTO);
+    CarResponseDto toResponse(CarDto car);
 
-    CarResponseDto carDtoToCarResponse(CarDto car);
+    List<CarDto> toDtoList(List<Car> carList);
 
-    List<CarDto> carListToCarDtoList(List<Car> carList);
+    List<CarResponseDto> toResponseList(List<CarDto> carList);
+
+    List<Car> toList(List<CarDto> carList);
 }
