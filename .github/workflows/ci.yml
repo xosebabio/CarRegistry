@@ -13,6 +13,21 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
+    services:
+      postgres:
+        image: postgres:13
+        env:
+          POSTGRES_DB: testdb
+          POSTGRES_USER: testuser
+          POSTGRES_PASSWORD: testpassword
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd="pg_isready"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=5
+
     steps:
       # Paso 1: Chequear el código desde el repositorio
       - name: Check out the code
@@ -26,11 +41,26 @@ jobs:
           distribution: 'adopt'
           cache: maven
 
-      # Paso 3: Compilar el proyecto
+      # Paso 3: Esperar a que la base de datos esté lista
+      - name: Wait for PostgreSQL to be ready
+        run: |
+          until pg_isready -h localhost -p 5432; do
+            echo "Waiting for PostgreSQL to be ready..."
+            sleep 3
+          done
+
+      # Paso 4: Configurar la base de datos PostgreSQL en el proyecto Spring
+      - name: Set up PostgreSQL environment variables
+        run: |
+          echo "SPRING_DATASOURCE_URL=jdbc:postgresql://localhost:5432/testdb" >> $GITHUB_ENV
+          echo "SPRING_DATASOURCE_USERNAME=testuser" >> $GITHUB_ENV
+          echo "SPRING_DATASOURCE_PASSWORD=testpassword" >> $GITHUB_ENV
+
+      # Paso 5: Compilar el proyecto
       - name: Build with Maven
         run: mvn clean compile
 
-      # Paso 4: Guardar los artefactos de compilación
+      # Paso 6: Guardar los artefactos de compilación
       - name: Save build artifacts
         uses: actions/upload-artifact@v3
         with:
